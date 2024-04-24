@@ -1,14 +1,17 @@
+import re
+
 sakha_dict = {
-    'А': 'A', 'а': 'a', 'Ә': 'Ē', 'ә': 'ē', 'Б': 'B', 'б': 'b', 'В': 'V', 'в': 'v',
-    'Г': 'G', 'г': 'g', 'Ҕ': 'Ğ', 'ҕ': 'ğ', 'Д': 'D', 'д': 'd', 'Е': 'E', 'е': 'e',
+    'А': 'A', 'а': 'a', 'Б': 'B', 'б': 'b', 'В': 'V', 'в': 'v', 'Г': 'G', 'г': 'g',
+    'Ҕ': 'Ğ', 'ҕ': 'ğ', 'Д': 'D', 'д': 'd', 'Дь': 'Dj', 'дь': 'dj', 'Е': 'E', 'е': 'e',
     'Ё': 'E', 'ё': 'e', 'Ж': 'J', 'ж': 'j', 'З': 'Z', 'з': 'z', 'И': 'İ', 'и': 'i',
     'Й': 'İ', 'й': 'i', 'К': 'K', 'к': 'k', 'Ҥ': 'Ŋ', 'ҥ': 'ŋ', 'Л': 'L', 'л': 'l',
-    'М': 'M', 'м': 'm', 'Н': 'N', 'н': 'n', 'Ң': 'Ŋ', 'ң': 'ŋ', 'О': 'O', 'о': 'o',
+    'М': 'M', 'м': 'm', 'Н': 'N', 'н': 'n', 'Ң': 'Ŋ', 'ң': 'ŋ', 'Нь': 'Nj', 'нь': 'nj',
+    'О': 'O', 'о': 'o',
     'Ө': 'Ӧ', 'ө': 'ӧ', 'П': 'P', 'п': 'p', 'Р': 'R', 'р': 'r', 'С': 'S', 'с': 's',
     'Т': 'T', 'т': 't', 'У': 'U', 'у': 'u', 'Ү': 'Ү', 'ү': 'ү', 'Ф': 'F', 'ф': 'f',
     'Х': 'H', 'х': 'h', 'Һ': 'H', 'һ': 'h', 'Ц': 'C', 'ц': 'c', 'Ч': 'Ç', 'ч': 'ç',
     'Ш': 'Ş', 'ш': 'ş', 'Щ': 'Ş', 'щ': 'ş', 'Ъ': '', 'ъ': '', 'Ы': 'Y', 'ы': 'y',
-    'Ь': '', 'ь': '', 'Э': 'E', 'э': 'e', 'Ю': 'Y', 'ю': 'y', 'Я': 'Ya', 'я': 'ya'
+    'Ь': '', 'ь': '', 'Э': 'E', 'э': 'e', 'Ю': 'Iu', 'ю': 'iu', 'Я': 'Ia', 'я': 'ia'
 }
 
 sakha_dict_Novgorodov_beta = {
@@ -24,6 +27,10 @@ sakha_dict_Novgorodov_beta = {
     'Ь': '', 'ь': '', 'Э': 'E', 'э': 'e', 'Ю': 'Y', 'ю': 'y', 'Я': 'Ya', 'я': 'ya'
 }
 
+multi_symbol_replacements = {
+    'Дь': 'Dj', 'дь':'dj', 'Нь': 'Nj', 'нь': 'nj'
+}
+
 def transliterate_sakha(text, mapping):
     """
     Transliterates the given text from Cyrillic Sakha to Novgorodov Sakha using the provided mapping dictionary.
@@ -35,6 +42,8 @@ def transliterate_sakha(text, mapping):
     Returns:
     - str: The transliterated text in Novgorodov Sakha script.
     """
+    regex = re.compile("(%s)" % "|".join(map(re.escape, multi_symbol_replacements.keys())))
+    text = regex.sub(lambda mo: multi_symbol_replacements[mo.string[mo.start():mo.end()]], text)
     transliterated_text = ""
     for char in text:
         if char in mapping:
