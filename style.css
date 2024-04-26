@@ -63,6 +63,21 @@ main {
   text-align: center;
   color: rgb(79, 79, 79);
 }
+.header-subtitle a {
+  cursor: pointer;
+  transition: .3s;
+}
+.header-subtitle a:hover {
+  color: #fff;
+}
+.header-subtitle a.active {
+  color: #fff;
+  text-decoration: underline;
+}
+.header-subtitle .flex-g-10 {
+  display: flex;
+  gap: 10px;
+}
 .input-container {
   width: 100%;
   flex-shrink: 0;
