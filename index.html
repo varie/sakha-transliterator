@@ -20,7 +20,14 @@
           Sudurgu Saqa Latin Transliterator
         </div>
         <div class="header-subtitle">
-          Convert your Sakha text in Cyrillic to Latin script
+          Convert your Sakha text in Cyrillic to 
+          <br> 
+          <br>
+          <div class="flex-g-10">
+            <a class="active" onclick="switchVariation(this, false)">Latin script</a>
+            <span> / </span>
+            <a class="" onclick="switchVariation(this, true)">Novgorodov alphabet</a>
+          </div>
         </div>
       </div>
 
@@ -103,6 +110,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
     <script>
+      let isNovgorodovVariation = false;
+
       const sakhaDict = {
         А: "A",
         а: "a",
@@ -278,7 +287,7 @@
         return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       }
 
-      function transliterate() {
+      function transliterateLatin() {
         let text = document.getElementById("cyrillicInput").value;
 
         const regex = new RegExp(
@@ -311,7 +320,11 @@
         .addEventListener("input", function () {
           document.getElementById("cyrillicInputCounterText").innerText =
             countCharacters(this.value);
-          transliterate();
+          if (isNovgorodovVariation) {
+              transliterateNovgorodov();
+          } else {
+              transliterateLatin();
+          }
         });
 
       document
@@ -339,5 +352,7 @@
 
       var clipboard = new ClipboardJS(".btn-copy");
     </script>
+
+  <script src="./src/transliterator-to-novg.js"></script>
   </body>
 </html>
