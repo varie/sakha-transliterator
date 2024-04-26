@@ -74,6 +74,18 @@ main {
 .header-subtitle .flex-g-10 {
   display: flex;
   gap: 10px;
+  position: relative;
+}
+.header-subtitle .beta-label {
+  position: absolute;
+  top: -2px;
+  right: -45px;
+  font-size: 12px;
+  border: 1px solid;
+  padding: 1px 7px;
+  border-radius: 20px;
+  background: #5f6a4a;
+  color: #dbdb00;
 }
 .input-container {
   width: 100%;
