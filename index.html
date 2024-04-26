@@ -1,348 +1,343 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Saqa Transliterator</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
-            rel="stylesheet"
-        />
-        <link href="./style.css" rel="stylesheet" />
-    </head>
-    <body>
-        <main>
-            <div class="header">
-                <div class="header-title">
-                    <img src="./imgs/logo.svg" />
-                    Sudurgu Saqa Latin Transliterator
-                </div>
-                <div class="header-subtitle">
-                    Convert your Sakha text in Cyrillic to Latin script
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="input-container">
-                    <label class="input-label" for="cyrillicInput"
-                        >Cyrillic input</label
-                    >
-                    <div class="textarea-wrapper">
-                        <textarea
-                            id="cyrillicInput"
-                            placeholder="Enter Cyrillic text here..."
-                        ></textarea>
-
-                        <div class="bottom-left-container">
-                            <div class="counter-indicator">
-                                <img src="./imgs/icon-abc.svg" />
-                                <span
-                                    class="counter-text"
-                                    id="cyrillicInputCounterText"
-                                    >0</span
-                                >
-                            </div>
-                            <button class="btn btn-reset" onclick="reset()">
-                                Clear
-                            </button>
-                        </div>
-                        <button class="btn btn-paste" onclick="paste()">
-                            <img src="./imgs/icon-paste.svg" />
-                        </button>
-                    </div>
-                </div>
-                <div class="input-container">
-                    <label class="input-label" for="latinOutput"
-                        >Latin output</label
-                    >
-                    <div class="textarea-wrapper">
-                        <textarea
-                            id="latinOutput"
-                            placeholder="Transliterated text will appear here..."
-                            readonly
-                        ></textarea>
-                        <div class="bottom-left-container">
-                            <div class="counter-indicator">
-                                <img src="./imgs/icon-abc.svg" />
-                                <span
-                                    class="counter-text"
-                                    id="latinOutputCounterText"
-                                    >0</span
-                                >
-                            </div>
-                        </div>
-                        <button
-                            class="btn btn-copy"
-                            data-clipboard-target="#latinOutput"
-                        >
-                            <img src="./imgs/icon-copy.svg" />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <div class="footer">
-            <p>
-                No data collected. Code available on
-                <a href="https://github.com/varie/sakha-transliterator"
-                    ><img src="./imgs/icon-github.png" /> GitHub</a
-                >.
-            </p>
-            <p>
-                Made with <img src="./imgs/icon-heart.png" /> by
-                <span class="footer-nickname">varie</span>,
-                <span class="footer-nickname">flutterdev_githubusername</span>,
-                <span class="footer-nickname">carbongo</span>
-            </p>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Saqa Transliterator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <div class="header">
+        <div class="header-title">
+          <img src="./imgs/logo.svg" class="logo" />
+          Sudurgu Saqa Latin Transliterator
         </div>
+        <div class="header-subtitle">
+          Convert your Sakha text in Cyrillic to Latin script
+        </div>
+      </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
-        <script>
-            const sakhaDict = {
-                А: "A",
-                а: "a",
-                Б: "B",
-                б: "b",
-                В: "V",
-                в: "v",
-                Г: "G",
-                г: "g",
-                Ҕ: "Ğ",
-                ҕ: "ğ",
-                Д: "D",
-                д: "d",
-                Дь: "Dj",
-                дь: "dj",
-                Е: "E",
-                е: "e",
-                Ё: "E",
-                ё: "e",
-                Ж: "J",
-                ж: "j",
-                З: "Z",
-                з: "z",
-                И: "İ",
-                и: "i",
-                Й: "İ",
-                й: "i",
-                К: "K",
-                к: "k",
-                Ҥ: "Ŋ",
-                ҥ: "ŋ",
-                Л: "L",
-                л: "l",
-                М: "M",
-                м: "m",
-                Н: "N",
-                н: "n",
-                Ң: "Ŋ",
-                ң: "ŋ",
-                Нь: "Nj",
-                нь: "nj",
-                О: "O",
-                о: "o",
-                Ө: "Ӧ",
-                ө: "ӧ",
-                П: "P",
-                п: "p",
-                Р: "R",
-                р: "r",
-                С: "S",
-                с: "s",
-                Т: "T",
-                т: "t",
-                У: "U",
-                у: "u",
-                Ү: "Ү",
-                ү: "ү",
-                Ф: "F",
-                ф: "f",
-                Х: "Q",
-                х: "q",
-                Һ: "H",
-                һ: "h",
-                Ц: "C",
-                ц: "c",
-                Ч: "Ç",
-                ч: "ç",
-                Ш: "Ş",
-                ш: "ş",
-                Щ: "Ş",
-                щ: "ş",
-                Ъ: "",
-                ъ: "",
-                Ы: "Y",
-                ы: "y",
-                Ь: "",
-                ь: "",
-                Э: "E",
-                э: "e",
-                Ю: "Iu",
-                ю: "iu",
-                Я: "Ia",
-                я: "ia",
-            };
+      <div class="container">
+        <div class="input-container">
+          <label class="input-label" for="cyrillicInput">Cyrillic input</label>
+          <div class="textarea-wrapper">
+            <textarea
+              id="cyrillicInput"
+              placeholder="Enter Cyrillic text here..."
+            ></textarea>
 
-            const sakhaDictNovgorodovBeta = {
-                А: "A",
-                а: "a",
-                Б: "B",
-                б: "b",
-                В: "V",
-                в: "v",
-                Г: "G",
-                г: "g",
-                Ҕ: "Ʃ",
-                ҕ: "ʃ",
-                Д: "D",
-                д: "d",
-                Е: "E",
-                е: "e",
-                Ё: "E",
-                ё: "e",
-                Ж: "J",
-                ж: "j",
-                З: "Z",
-                з: "z",
-                И: "İ",
-                и: "i",
-                Й: "J",
-                й: "j",
-                К: "K",
-                к: "k",
-                Л: "L",
-                л: "l",
-                М: "M",
-                м: "m",
-                Н: "N",
-                н: "n",
-                Ң: "Ŋ",
-                ң: "ŋ",
-                О: "Ɔ",
-                о: "ɔ",
-                Ө: "Ӧ",
-                ө: "ӧ",
-                П: "P",
-                п: "p",
-                Р: "R",
-                р: "r",
-                С: "S",
-                с: "s",
-                Т: "T",
-                т: "t",
-                У: "U",
-                у: "u",
-                Ү: "Y",
-                ү: "y",
-                Ф: "F",
-                ф: "f",
-                Х: "Q",
-                х: "q",
-                Һ: "H",
-                һ: "h",
-                Ц: "C",
-                ц: "c",
-                Ч: "Ç",
-                ч: "ç",
-                Ш: "Ş",
-                ш: "ş",
-                Щ: "Ş",
-                щ: "ş",
-                Ъ: "",
-                ъ: "",
-                Ы: "ɯ",
-                ы: "ɯ",
-                Ь: "",
-                ь: "",
-                Э: "E",
-                э: "e",
-                Ю: "Y",
-                ю: "y",
-                Я: "Ya",
-                я: "ya",
-            };
+            <div class="bottom-left-container">
+              <div class="counter-indicator">
+                <img src="./imgs/icon-abc.svg" />
+                <span class="counter-text" id="cyrillicInputCounterText"
+                  >0</span
+                >
+              </div>
+              <button class="btn btn-reset" onclick="reset()">Clear</button>
+            </div>
+            <button class="btn btn-paste" onclick="paste()">
+              <img src="./imgs/icon-paste.svg" />
+            </button>
+          </div>
+        </div>
+        <div class="input-container">
+          <label class="input-label" for="latinOutput">Latin output</label>
+          <div class="textarea-wrapper">
+            <textarea
+              id="latinOutput"
+              placeholder="Transliterated text will appear here..."
+              readonly
+            ></textarea>
+            <div class="bottom-left-container">
+              <div class="counter-indicator">
+                <img src="./imgs/icon-abc.svg" />
+                <span class="counter-text" id="latinOutputCounterText">0</span>
+              </div>
+            </div>
+            <button class="btn btn-copy" data-clipboard-target="#latinOutput">
+              <img src="./imgs/icon-copy.svg" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="footer">
+      <p>
+        No data collected. Code available on
+        <a
+          href="https://github.com/varie/sakha-transliterator"
+          target="_blank"
+          rel="noreferrer"
+          ><img src="./imgs/icon-github.png" class="gh-icon" /> GitHub</a
+        >.
+      </p>
+      <p>
+        Made with <img src="./imgs/icon-heart.png" /> by
+        <span class="footer-nickname">
+          <a href="https://github.com/varie" target="_blank" rel="noreferrer"
+            >varie</a
+          ></span
+        >,
+        <span class="footer-nickname">
+          <a
+            href="https://github.com/gradientascent100"
+            target="_blank"
+            rel="noreferrer"
+            >gradientascent100</a
+          ></span
+        >,
+        <span class="footer-nickname">
+          <a href="https://github.com/carbongo" target="_blank" rel="noreferrer"
+            >carbongo</a
+          ></span
+        >.
+      </p>
+    </div>
 
-            const multiSymbolReplacements = {
-                Дь: "Dj",
-                дь: "dj",
-                Нь: "Nj",
-                нь: "nj",
-            };
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+    <script>
+      const sakhaDict = {
+        А: "A",
+        а: "a",
+        Б: "B",
+        б: "b",
+        В: "V",
+        в: "v",
+        Г: "G",
+        г: "g",
+        Ҕ: "Ğ",
+        ҕ: "ğ",
+        Д: "D",
+        д: "d",
+        Дь: "Dj",
+        дь: "dj",
+        Е: "E",
+        е: "e",
+        Ё: "E",
+        ё: "e",
+        Ж: "J",
+        ж: "j",
+        З: "Z",
+        з: "z",
+        И: "İ",
+        и: "i",
+        Й: "İ",
+        й: "i",
+        К: "K",
+        к: "k",
+        Ҥ: "Ŋ",
+        ҥ: "ŋ",
+        Л: "L",
+        л: "l",
+        М: "M",
+        м: "m",
+        Н: "N",
+        н: "n",
+        Ң: "Ŋ",
+        ң: "ŋ",
+        Нь: "Nj",
+        нь: "nj",
+        О: "O",
+        о: "o",
+        Ө: "Ӧ",
+        ө: "ӧ",
+        П: "P",
+        п: "p",
+        Р: "R",
+        р: "r",
+        С: "S",
+        с: "s",
+        Т: "T",
+        т: "t",
+        У: "U",
+        у: "u",
+        Ү: "Ү",
+        ү: "ү",
+        Ф: "F",
+        ф: "f",
+        Х: "Q",
+        х: "q",
+        Һ: "H",
+        һ: "h",
+        Ц: "C",
+        ц: "c",
+        Ч: "Ç",
+        ч: "ç",
+        Ш: "Ş",
+        ш: "ş",
+        Щ: "Ş",
+        щ: "ş",
+        Ъ: "",
+        ъ: "",
+        Ы: "Y",
+        ы: "y",
+        Ь: "",
+        ь: "",
+        Э: "E",
+        э: "e",
+        Ю: "Iu",
+        ю: "iu",
+        Я: "Ia",
+        я: "ia",
+      };
 
-            function escapeRegExp(string) {
-                return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-            }
+      const sakhaDictNovgorodovBeta = {
+        А: "A",
+        а: "a",
+        Б: "B",
+        б: "b",
+        В: "V",
+        в: "v",
+        Г: "G",
+        г: "g",
+        Ҕ: "Ʃ",
+        ҕ: "ʃ",
+        Д: "D",
+        д: "d",
+        Е: "E",
+        е: "e",
+        Ё: "E",
+        ё: "e",
+        Ж: "J",
+        ж: "j",
+        З: "Z",
+        з: "z",
+        И: "İ",
+        и: "i",
+        Й: "J",
+        й: "j",
+        К: "K",
+        к: "k",
+        Л: "L",
+        л: "l",
+        М: "M",
+        м: "m",
+        Н: "N",
+        н: "n",
+        Ң: "Ŋ",
+        ң: "ŋ",
+        О: "Ɔ",
+        о: "ɔ",
+        Ө: "Ӧ",
+        ө: "ӧ",
+        П: "P",
+        п: "p",
+        Р: "R",
+        р: "r",
+        С: "S",
+        с: "s",
+        Т: "T",
+        т: "t",
+        У: "U",
+        у: "u",
+        Ү: "Y",
+        ү: "y",
+        Ф: "F",
+        ф: "f",
+        Х: "Q",
+        х: "q",
+        Һ: "H",
+        һ: "h",
+        Ц: "C",
+        ц: "c",
+        Ч: "Ç",
+        ч: "ç",
+        Ш: "Ş",
+        ш: "ş",
+        Щ: "Ş",
+        щ: "ş",
+        Ъ: "",
+        ъ: "",
+        Ы: "ɯ",
+        ы: "ɯ",
+        Ь: "",
+        ь: "",
+        Э: "E",
+        э: "e",
+        Ю: "Y",
+        ю: "y",
+        Я: "Ya",
+        я: "ya",
+      };
 
-            function transliterate() {
-                let text = document.getElementById("cyrillicInput").value;
+      const multiSymbolReplacements = {
+        Дь: "Dj",
+        дь: "dj",
+        Нь: "Nj",
+        нь: "nj",
+      };
 
-                const regex = new RegExp(
-                    Object.keys(multiSymbolReplacements)
-                        .map(escapeRegExp)
-                        .join("|"),
-                    "g",
-                );
-                text = text.replace(
-                    regex,
-                    (match) => multiSymbolReplacements[match],
-                );
+      function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      }
 
-                let transliteratedText = "";
-                for (const char of text) {
-                    if (sakhaDict[char] !== undefined) {
-                        transliteratedText += sakhaDict[char];
-                    } else {
-                        transliteratedText += char;
-                    }
-                }
+      function transliterate() {
+        let text = document.getElementById("cyrillicInput").value;
 
-                document.getElementById("latinOutput").value =
-                    transliteratedText;
-                document
-                    .getElementById("latinOutput")
-                    .dispatchEvent(new Event("input"));
-            }
+        const regex = new RegExp(
+          Object.keys(multiSymbolReplacements).map(escapeRegExp).join("|"),
+          "g"
+        );
+        text = text.replace(regex, (match) => multiSymbolReplacements[match]);
 
-            function countCharacters(s) {
-                return s.replace(/\s/g, "").length;
-            }
+        let transliteratedText = "";
+        for (const char of text) {
+          if (sakhaDict[char] !== undefined) {
+            transliteratedText += sakhaDict[char];
+          } else {
+            transliteratedText += char;
+          }
+        }
 
-            document
-                .getElementById("cyrillicInput")
-                .addEventListener("input", function () {
-                    document.getElementById(
-                        "cyrillicInputCounterText",
-                    ).innerText = countCharacters(this.value);
-                    transliterate();
-                });
+        document.getElementById("latinOutput").value = transliteratedText;
+        document
+          .getElementById("latinOutput")
+          .dispatchEvent(new Event("input"));
+      }
 
-            document
-                .getElementById("latinOutput")
-                .addEventListener("input", function () {
-                    document.getElementById(
-                        "latinOutputCounterText",
-                    ).innerText = countCharacters(this.value);
-                });
+      function countCharacters(s) {
+        return s.replace(/\s/g, "").length;
+      }
 
-            function paste() {
-                navigator.clipboard.readText().then(function (s) {
-                    document.getElementById("cyrillicInput").value = s;
-                    document
-                        .getElementById("cyrillicInput")
-                        .dispatchEvent(new Event("input"));
-                });
-            }
+      document
+        .getElementById("cyrillicInput")
+        .addEventListener("input", function () {
+          document.getElementById("cyrillicInputCounterText").innerText =
+            countCharacters(this.value);
+          transliterate();
+        });
 
-            function reset() {
-                document.getElementById("cyrillicInput").value = "";
-                document
-                    .getElementById("cyrillicInput")
-                    .dispatchEvent(new Event("input"));
-            }
+      document
+        .getElementById("latinOutput")
+        .addEventListener("input", function () {
+          document.getElementById("latinOutputCounterText").innerText =
+            countCharacters(this.value);
+        });
 
-            var clipboard = new ClipboardJS(".btn-copy");
-        </script>
-    </body>
+      function paste() {
+        navigator.clipboard.readText().then(function (s) {
+          document.getElementById("cyrillicInput").value = s;
+          document
+            .getElementById("cyrillicInput")
+            .dispatchEvent(new Event("input"));
+        });
+      }
+
+      function reset() {
+        document.getElementById("cyrillicInput").value = "";
+        document
+          .getElementById("cyrillicInput")
+          .dispatchEvent(new Event("input"));
+      }
+
+      var clipboard = new ClipboardJS(".btn-copy");
+    </script>
+  </body>
 </html>
