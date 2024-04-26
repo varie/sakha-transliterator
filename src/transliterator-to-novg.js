@@ -4,7 +4,7 @@ function transliterateNovgorodov() {
 
     const graphs = {
         3: {
-            'ннь': 'ɲ:', 'ддь': 'dʑ:'
+            'ннь': 'ɲ:', 'ддь': 'dʑ:',
         },
         2: {
             'ыа': 'ɯa', 'иэ': 'iɛ', 'үө': 'yө', 
@@ -21,16 +21,34 @@ function transliterateNovgorodov() {
             'ee': 'iɛ:', 'фф': 'f:',
         },
         1: {
-            'а': 'a', 'о': 'ɔ', 'у': 'u', 
-            'ы': 'ɯ', 'э': 'ɛ', 'ө': 'ө', 
-            'ү': 'y', 'и': 'i', 'м': 'm', 
-            'н': 'n', 'ҥ': 'ŋ', 'п': 'p', 
-            'т': 't', 'ч': 'tɕ', 'к': 'k', 
-            'б': 'b', 'д': 'd', 'г': 'g', 
-            'с': 's', 'х': 'q', 'һ': 'h', 
-            'ҕ': 'ʃ', 'л': 'l', 'й': 'j', 
-            'р': 'ɾ', 'в': 'v', 'е': 'iɛ',
-            'ф': 'f',
+            'а': 'a', 'А': 'А',
+            'о': 'ɔ', 'О': 'Ɔ',
+            'у': 'u', 'У': 'U',
+            'ы': 'ɯ', 'Ы': 'ɯ',
+            'э': 'ɛ', 'Э': 'E',
+            'ө': 'ө', 'Ɵ': 'Ɵ',
+            'ү': 'y', 'Ү': 'У',
+            'и': 'i', 'И': 'İ',
+            'м': 'm', 'М': 'M',
+            'н': 'n', 'Н': 'N',
+            'ҥ': 'ŋ', 'Ң': 'Ŋ',
+            'п': 'p', 'П': 'P',
+            'т': 't', 'Е': 'T', 
+            'ч': 'ç', 'Ч': 'Ç', 
+            'к': 'k', 'К': 'K',
+            'б': 'b', 'Б': 'B', 
+            'д': 'd', 'Д': 'd', 
+            'г': 'g', 'Г': 'G', 
+            'с': 's', 'С': 'S', 
+            'х': 'q', 'Х': 'Q',
+            'һ': 'h', 'Һ': 'H', 
+            'ҕ': 'ʃ', 'Ҕ': 'ʃ', 
+            'л': 'l', 'Л': 'L', 
+            'й': 'j', 'Й': 'j', 
+            'р': 'ɾ', 'Р': 'ɾ', 
+            'в': 'v', 'В': 'V', 
+            'е': 'iɛ','Е': 'İɛ',
+            'ф': 'f', 'Ф': 'F',
         }
     };
     
@@ -84,20 +102,7 @@ function transliterateNovgorodov() {
     document
         .getElementById("latinOutput")
         .dispatchEvent(new Event("input"));
-
-    // return transliteratedPhrase;
 }
-
-// function transliteratePhrase() {
-//     const phrase = document.getElementById('phraseInput').value.toLowerCase();
-
-//     const result = transliterate(phrase, graphs);
-
-//     const transliteratedPhrase = result.join(' ');
-
-//     document.getElementById('result').textContent = 'Transliterated: ' + transliteratedPhrase;
-// }
-
 
 function switchVariation(element, flag) {
     let switchers = document.querySelectorAll('.header-subtitle a');

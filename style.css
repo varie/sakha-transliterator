@@ -67,12 +67,9 @@ main {
   cursor: pointer;
   transition: .3s;
 }
-.header-subtitle a:hover {
-  color: #fff;
-}
 .header-subtitle a.active {
-  color: #fff;
   text-decoration: underline;
+  color: rgb(79, 79, 79);
 }
 .header-subtitle .flex-g-10 {
   display: flex;
@@ -260,6 +257,9 @@ textarea::placeholder,
   }
   .header-subtitle {
     color: rgb(189, 189, 189);
+  }
+  .header-subtitle a.active {
+    color: #fff;
   }
   .container {
     background: rgb(18, 18, 18);
